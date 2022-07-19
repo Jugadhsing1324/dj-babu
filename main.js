@@ -4,6 +4,7 @@ rightWrist_x=0;
 leftWrist_y=0;
 rightWrist_y=0;
 scoreleftWrist=0;
+scoreRightWrist=0;
 
 function preload(){
     song=loadSound("Marshmello-Alone-Mybestfeelings.com_.mp3");
@@ -38,6 +39,9 @@ function gotPoses(results){
 
         scoreleftWrist=results[0].pose.keypoints[9].score;
         console.log("score of the left wrist is = "+scoreleftWrist);
+
+        scoreRightWrist=results[0].pose.keypoints[10].score;
+        console.log("score of the right wrist is = "+scoreRightWrist);
     }
 }
 
@@ -45,6 +49,7 @@ function draw(){
     image(video,0,0,600,500);
     fill("red");
     stroke("red");
+
     if(scoreleftWrist>0.2)
     {
     circle(leftWrist_x,leftWrist_y,20);
@@ -54,6 +59,30 @@ function draw(){
     document.getElementById("volume").innerHTML="VOLUME= "+volume;
 
     song.setVolume(volume);
+    }
+
+    if(scoreRightWrist>0.2){
+        circle(rightWrist_x,rightWrist_y,20);
+        if(rightWrist_y>0 && rightWrist_y<=100){
+            document.getElementById("speed").innerHTML="SPEED= 0.5X";
+            song.rate(0.5);
+        }
+        else if(rightWrist_y>100 && rightWrist_y<=200){
+            document.getElementById("speed").innerHTML="SPEED= 1X";
+            song.rate(1);
+        }
+        else if(rightWrist_y>200 && rightWrist_y<=300){
+            document.getElementById("speed").innerHTML="SPEED= 1.5X";
+            song.rate(1.5);
+        }
+        else if(rightWrist_y>300 && rightWrist_y<=400){
+            document.getElementById("speed").innerHTML="SPEED= 2X";
+            song.rate(2);
+        }
+        else if(rightWrist_y>400 && rightWrist_y<=500){
+            document.getElementById("speed").innerHTML="SPEED= 2.5X";
+            song.rate(2.5);
+        }
     }
 }
 
